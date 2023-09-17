@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
+#include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,8 +14,14 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_pb_conn_clicked()
 {
-    ui->label->setText("New Text");
+    ui->lt_conn->setText("Идет подключение к БД...");
+}
+
+
+void MainWindow::on_pb_cancel_clicked()
+{
+    ui->lt_conn->setText("Отмена подключения...");
 }
 
