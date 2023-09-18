@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>301</width>
+    <height>255</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="0">
+      <widget class="QLabel" name="lb_dbName">
+       <property name="text">
+        <string>Имя БД</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QSpinBox" name="spb_portNum">
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::NoButtons</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="lb_login">
+       <property name="text">
+        <string>Логин</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="lb_password">
+       <property name="text">
+        <string>Пароль</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="le_login"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="le_hostName">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="placeholderText">
+        <string/>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="le_dbName"/>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="le_password"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="lb_portNum">
+       <property name="text">
+        <string>Номер порта</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="lb_hostName">
+       <property name="text">
+        <string>Имя хоста</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout_2">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="pb_cancelConn">
+       <property name="text">
+        <string>Отмена</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="pb_conn">
+       <property name="text">
+        <string>Подключение</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="2">
+      <widget class="QLabel" name="lb_connection">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Нет подключения к базе данных</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pb_cancelConn</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>174</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>150</x>
+     <y>127</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pb_cancelConn</sender>
+   <signal>clicked()</signal>
+   <receiver>spb_portNum</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>77</x>
+     <y>174</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>95</x>
+     <y>147</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pb_cancelConn</sender>
+   <signal>clicked()</signal>
+   <receiver>le_password</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>63</x>
+     <y>169</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>72</x>
+     <y>109</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pb_cancelConn</sender>
+   <signal>clicked()</signal>
+   <receiver>le_login</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>23</x>
+     <y>172</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>72</x>
+     <y>84</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pb_cancelConn</sender>
+   <signal>clicked()</signal>
+   <receiver>le_dbName</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>35</x>
+     <y>171</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pb_cancelConn</sender>
+   <signal>clicked()</signal>
+   <receiver>le_hostName</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>11</x>
+     <y>170</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>77</x>
+     <y>19</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
