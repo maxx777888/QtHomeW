@@ -18,7 +18,12 @@ public:
 
 private slots:
     void on_pb_startStop_toggled(bool checked);
-    void RcvStopwatchData();
+    void RcvSwatchData(QString ms, QString s, QString m, QString h);
+    void RcvRoundData(QString round, QString s);
+
+    void on_pb_clearAll_clicked();
+
+    void on_pb_round_clicked();
 
 private:
     Ui::MainWindow *ui;

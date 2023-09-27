@@ -16,11 +16,6 @@ Stopwatch::Stopwatch(QObject *parent)
 
 }
 
-void Stopwatch::SendStopwatchData()
-{
-    emit sig_stopwatchData();
-}
-
 void Stopwatch::startTimer(int mls)
 {
     timer->start(mls);
@@ -31,9 +26,45 @@ void Stopwatch::stopTimer()
     timer->stop();
 }
 
+void Stopwatch::resetTimer()
+{
+    this->ms = 0;
+    this->s = 0;
+    this->m =0;
+    this->h = 0;
+    this->round = 0;
+}
+
+void Stopwatch::addRound()
+{
+    int s = 0;
+
+    if (this->round == 0) {
+
+        this->round = 1;
+        roundS = this->s + this->m*60 + this->h*360;
+
+    } else {
+
+        this->round++;
+        s = this->s + this->m*60 + this->h*360;
+        roundTime = s - roundS;
+        roundS = s;
+
+    }
+
+    emit sig_addRound(QString::number(this->round) ,QString::number(roundTime));
+
+}
+
 void Stopwatch::updateTimer()
 {
-    timer->start(10);
+    QString mls;
+    QString sec;
+    QString min;
+    QString hour;
+
+    //Логика работы секундомера
     ms++;
     if(ms >= 100) {
         ms = 0;
@@ -47,7 +78,32 @@ void Stopwatch::updateTimer()
         m = 0;
         h++;
     }
+    //Добавление 0 перед числом строки чтобы цифры не скакали на экране
+    if (ms < 10){
+        mls = "0" + QString::number(ms);
+    }else {
+        mls = QString::number(ms);
+    }
+
+    if (s < 10) {
+        sec = "0" + QString::number(s);
+    } else {
+        sec = QString::number(s);
+    }
+    if (m < 10) {
+        min = "0" + QString::number(m);
+    } else {
+        min = QString::number(m);
+    }
+    if (h < 10) {
+        hour = "0" + QString::number(h);
+    } else {
+        hour = QString::number(h);
+    }
+    emit sig_sWatch(mls, sec, min, hour);
 }
+
+
 
 
 
