@@ -12,9 +12,8 @@ class Stopwatch : public QObject
 public:
     explicit Stopwatch(QObject *parent = nullptr);
 
-    int ms, s, m, h;
-    int round;
-    void startTimer(int mls);
+
+    void startTimer();
     void stopTimer();
 
     void resetTimer();
@@ -30,6 +29,8 @@ private:
     QTimer* timer;
     int roundTime = 0;
     int roundS = 0;
+    int ms, s, m, h;
+    int round;
 
 
 

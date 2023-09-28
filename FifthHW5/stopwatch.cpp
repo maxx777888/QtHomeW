@@ -16,9 +16,9 @@ Stopwatch::Stopwatch(QObject *parent)
 
 }
 
-void Stopwatch::startTimer(int mls)
+void Stopwatch::startTimer()
 {
-    timer->start(mls);
+    timer->start(10);
 }
 
 void Stopwatch::stopTimer()

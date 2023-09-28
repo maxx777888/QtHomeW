@@ -28,15 +28,15 @@ void MainWindow::on_pb_startStop_toggled(bool checked)
     {
         ui->pb_startStop->setText("Стоп");
         ui->pb_round->setEnabled(true);
-        ui->pb_clearAll->setEnabled(false);
-        stopWatch->startTimer(10);
+        //ui->pb_clearAll->setEnabled(false);
+        stopWatch->startTimer();
 
 
     } else {
 
         ui->pb_startStop->setText("Старт");
         ui->pb_round->setEnabled(false);
-        ui->pb_clearAll->setEnabled(true);
+        //ui->pb_clearAll->setEnabled(true);
         stopWatch->stopTimer();
     }
 }
@@ -57,7 +57,7 @@ void MainWindow::RcvRoundData(QString round, QString s)
 void MainWindow::on_pb_clearAll_clicked()
 {
     ui->lb_secTime->setText("00 : 00 : 00 : 00");
-    ui->tb_roundTime->clear();
+    //ui->tb_roundTime->clear();
     stopWatch->resetTimer();
 }
 

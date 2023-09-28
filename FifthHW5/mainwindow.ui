@@ -67,5 +67,22 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pb_clearAll</sender>
+   <signal>clicked()</signal>
+   <receiver>tb_roundTime</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>142</x>
+     <y>91</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
