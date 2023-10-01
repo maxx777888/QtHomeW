@@ -83,13 +83,14 @@ void MainWindow::StartRace(void){
 
         //ui->te_debug->append("Выполни ДЗ!");
         //Тут должен быть код ДЗ
-        //QFuture<void> futureResult = QtConcurrent::run(&ExampleRace::DoWork, this, number, true, ui->sb_initNum->value());
-
-        auto futureResult1 = [&]{return concurRace1->DoWork(&number, true, ui->sb_initNum->value());};
-        auto result1 = QtConcurrent::run(futureResult1);
-        auto futureResult2 = [&]{return concurRace2->DoWork(&number, true, ui->sb_initNum->value());};
-        auto result2 = QtConcurrent::run(futureResult2);
-
+        //QFuture<void> futureResult =
+       //auto resultRace = QtConcurrent::run(&ExampleRace::DoWork, &number, true, ui->sb_initNum->value());
+       //QtConcurrent::run(&ExampleRace::DoWork, &number, true, ui->sb_initNum->value());
+       auto futureResult1 = [&]{return concurRace1->DoWork(&number, true, ui->sb_initNum->value());};
+       //QFuture<void> result1 = QtConcurrent::run(futureResult1);
+       auto futureResult2 = [&]{return concurRace2->DoWork(&number, false, ui->sb_initNum->value());};
+       //QFuture<void> result2 = QtConcurrent::run(futureResult2);
+       QtConcurrent::run(futureResult1).then(futureResult2);
 
     }
     else{
