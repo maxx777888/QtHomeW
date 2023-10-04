@@ -48,6 +48,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QMainWindow window;
     QString pathToFile = "";
     uint8_t numberSelectChannel = 0xEA;
 
@@ -59,6 +60,7 @@ private:
 
     QChart* chart;
     QChartView* chartView;
+    QLineSeries* series;
     //QGridLayout *layout;
 };
 

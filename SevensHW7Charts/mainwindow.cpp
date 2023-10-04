@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     //Объект QChartView является виджетом отображальщиком графика. В его конструктор необходимо передать ссылку
     //на объект QChart.
     chartView = new QChartView(chart);
+    series = new QLineSeries();
 
 
 }
@@ -29,6 +30,7 @@ MainWindow::~MainWindow()
     //Обязательно освободим память
     delete chart;
     delete chartView;
+    delete series;
 }
 
 
@@ -255,6 +257,14 @@ void MainWindow::on_pb_start_clicked()
                                                 ui->te_Result->append(QString::number(sendIntoGraph.at(FD-1)) + " FD last number");
                                                 ui->te_Result->append(" ----------------------------------------------------- ");
 
+
+                                                for(int i = 0; i<sendIntoGraph.size(); i++){
+                                                    double j = sendIntoGraph.at(i);
+                                                    series->append(i,j);
+                                                }
+                                                chart->addSeries(series);
+                                                chart->createDefaultAxes();
+                                                chart->axes(Qt::Vertical).first()->setRange(minVal - step, maxVal + step);
                                                 /*
                                                  * Тут необходимо реализовать код наполнения серии
                                                  * и вызов сигнала для отображения графика
@@ -266,7 +276,9 @@ void MainWindow::on_pb_start_clicked()
                                .then(process)
                                .then(findMax);
 
-
+    window.setCentralWidget(chartView);
+    window.resize(400,300);
+    window.show();
 
 }
 
