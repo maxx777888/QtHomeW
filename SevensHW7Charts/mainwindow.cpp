@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
     chartView = new QChartView(chart);
     series = new QLineSeries();
 
+    QObject::connect(chart, &MainWindow::sig_buildGraph, this, &MainWindow::RcvSigtoBuildGraph);
+
 
 }
 
@@ -233,7 +235,7 @@ void MainWindow::on_pb_start_clicked()
         numberSelectChannel = 0xED;
     }
 
-
+    graphIsEmpty = true;
     auto read = [&]{ return ReadFile(pathToFile, numberSelectChannel); };
     auto process = [&](QVector<uint32_t> res){ return ProcessFile(res);};
     auto findMax = [&](QVector<double> res){
@@ -257,14 +259,15 @@ void MainWindow::on_pb_start_clicked()
                                                 ui->te_Result->append(QString::number(sendIntoGraph.at(FD-1)) + " FD last number");
                                                 ui->te_Result->append(" ----------------------------------------------------- ");
 
-
                                                 for(int i = 0; i<sendIntoGraph.size(); i++){
-                                                    double j = sendIntoGraph.at(i);
-                                                    series->append(i,j);
+                                                    series->append(i,sendIntoGraph.at(i));
                                                 }
                                                 chart->addSeries(series);
                                                 chart->createDefaultAxes();
-                                                chart->axes(Qt::Vertical).first()->setRange(minVal - step, maxVal + step);
+
+                                                emit sig_buildGraph(chart);
+
+
                                                 /*
                                                  * Тут необходимо реализовать код наполнения серии
                                                  * и вызов сигнала для отображения графика
@@ -276,9 +279,16 @@ void MainWindow::on_pb_start_clicked()
                                .then(process)
                                .then(findMax);
 
-    window.setCentralWidget(chartView);
-    window.resize(400,300);
-    window.show();
+
+}
+
+void MainWindow::RcvSigtoBuildGraph(QChart* chart)
+{
+
+
+     window.setCentralWidget(chartView);
+     window.resize(400,300);
+     window.show();
 
 }
 

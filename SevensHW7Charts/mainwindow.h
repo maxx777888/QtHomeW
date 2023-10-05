@@ -43,8 +43,10 @@ public:
 private slots:
     void on_pb_path_clicked();
     void on_pb_start_clicked();
+    void RcvSigtoBuildGraph(QChart* chart);
 
-
+signals:
+    void sig_buildGraph(QChart* chart);
 
 private:
     Ui::MainWindow *ui;
@@ -57,6 +59,7 @@ private:
     QVector<double> mins, maxs;
 
     //Graphic Objects
+    bool graphIsEmpty;
 
     QChart* chart;
     QChartView* chartView;
