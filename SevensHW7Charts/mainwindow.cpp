@@ -233,7 +233,7 @@ void MainWindow::on_pb_start_clicked()
         numberSelectChannel = 0xED;
     }
 
-    graphIsEmpty = true;
+
     auto read = [&]{ return ReadFile(pathToFile, numberSelectChannel); };
     auto process = [&](QVector<uint32_t> res){ return ProcessFile(res);};
     auto findMax = [&](QVector<double> res){
