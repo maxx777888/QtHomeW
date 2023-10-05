@@ -43,10 +43,12 @@ public:
 private slots:
     void on_pb_path_clicked();
     void on_pb_start_clicked();
-    void RcvSigtoBuildGraph(QChart* chart);
+    void RcvSigtoBuildGraph(QVector<double> sendIntoGraph);
+
+    void on_pb_clearResult_clicked();
 
 signals:
-    void sig_buildGraph(QChart* chart);
+    void sig_buildGraph(QVector<double> sendIntoGraph);
 
 private:
     Ui::MainWindow *ui;
@@ -58,13 +60,10 @@ private:
     QVector<double> procesData;
     QVector<double> mins, maxs;
 
-    //Graphic Objects
-    bool graphIsEmpty;
-
     QChart* chart;
     QChartView* chartView;
     QLineSeries* series;
-    //QGridLayout *layout;
+
 };
 
 

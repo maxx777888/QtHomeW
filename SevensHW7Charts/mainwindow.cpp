@@ -15,12 +15,10 @@ MainWindow::MainWindow(QWidget *parent)
     //за само поле отображения графика, управляет осями, легенодой и прочими атрибутами графика.
     chart = new QChart( );
     chart->legend()->setVisible(false);
-    //Объект QChartView является виджетом отображальщиком графика. В его конструктор необходимо передать ссылку
-    //на объект QChart.
-    chartView = new QChartView(chart);
+
     series = new QLineSeries();
 
-    QObject::connect(chart, &MainWindow::sig_buildGraph, this, &MainWindow::RcvSigtoBuildGraph);
+    connect(this, &MainWindow::sig_buildGraph, this, &MainWindow::RcvSigtoBuildGraph);
 
 
 }
@@ -243,35 +241,16 @@ void MainWindow::on_pb_start_clicked()
                                                 mins = FindMin(res);
                                                 DisplayResult(mins, maxs);
 
-                                                QVector<double> sendIntoGraph = res.mid(0, FD);
-                                                //QVector<double> x;
-                                                //считываем шаг сетки и граничные значения
-                                                double step = 0.1;
-                                                double minVal = mins.first();
-                                                double maxVal = maxs.first() + step; //утчтем ноль
-                                                /*
-                                                   Формируем сетку значений, ресайзим вектор и заполняем его
-                                                */
-                                                double steps = round(((maxVal-minVal)/step));
-                                                ui->te_Result->append(QString::number(steps) + " points between min and max");
-                                                ui->te_Result->append(QString::number(sendIntoGraph.first()) + " first number");
-                                                ui->te_Result->append(QString::number(sendIntoGraph.last()) + " last number");
-                                                ui->te_Result->append(QString::number(sendIntoGraph.at(FD-1)) + " FD last number");
-                                                ui->te_Result->append(" ----------------------------------------------------- ");
 
-                                                for(int i = 0; i<sendIntoGraph.size(); i++){
-                                                    series->append(i,sendIntoGraph.at(i));
-                                                }
-                                                chart->addSeries(series);
-                                                chart->createDefaultAxes();
 
-                                                emit sig_buildGraph(chart);
+
 
 
                                                 /*
                                                  * Тут необходимо реализовать код наполнения серии
                                                  * и вызов сигнала для отображения графика
                                                  */
+                                                emit sig_buildGraph(res.mid(0, FD));
 
                                              };
 
@@ -282,14 +261,36 @@ void MainWindow::on_pb_start_clicked()
 
 }
 
-void MainWindow::RcvSigtoBuildGraph(QChart* chart)
+void MainWindow::RcvSigtoBuildGraph(QVector<double> sendIntoGraph) //Слот принимающий сигнал и выводящий график на экран
 {
 
+    //Перед новой отрисовкой очистим графики
+    if(chart->series().isEmpty() == false){
+        series->clear();
+        chart->removeSeries(series);
+    }
+    //Заносим данные точек на график, где на х идет индекс точки в векторе, а в у идет сама точка
+    for(int i = 0; i<sendIntoGraph.size(); i++){
+        series->append(i,sendIntoGraph.at(i));
+    }
+
+    chart->addSeries(series);
+    chart->createDefaultAxes();
+
+    chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
 
      window.setCentralWidget(chartView);
+     window.setWindowTitle("График");
      window.resize(400,300);
      window.show();
 
 }
 
+
+
+void MainWindow::on_pb_clearResult_clicked()//Метод закрывает окно с графиком
+{
+     window.close();
+}
 
