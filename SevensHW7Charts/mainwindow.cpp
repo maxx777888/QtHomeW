@@ -241,16 +241,30 @@ void MainWindow::on_pb_start_clicked()
                                                 mins = FindMin(res);
                                                 DisplayResult(mins, maxs);
 
-
-
-
-
-
                                                 /*
                                                  * Тут необходимо реализовать код наполнения серии
                                                  * и вызов сигнала для отображения графика
                                                  */
-                                                emit sig_buildGraph(res.mid(0, FD));
+
+                                                QVector<double> sendIntoGraph = res.mid(0, FD);
+
+                                                //Перед новой отрисовкой очистим графики
+                                                if(chart->series().isEmpty() == false){
+                                                    series->clear();
+                                                    chart->removeSeries(series);
+                                                }
+                                                //Заносим данные точек на график, где на х идет индекс точки в векторе, а в у идет сама точка
+                                                for(int i = 0; i<sendIntoGraph.size(); i++){
+                                                    series->append(i,sendIntoGraph.at(i));
+                                                }
+
+                                                chart->addSeries(series);
+                                                chart->createDefaultAxes();
+
+
+
+
+                                                emit sig_buildGraph();
 
                                              };
 
@@ -261,24 +275,13 @@ void MainWindow::on_pb_start_clicked()
 
 }
 
-void MainWindow::RcvSigtoBuildGraph(QVector<double> sendIntoGraph) //Слот принимающий сигнал и выводящий график на экран
+void MainWindow::RcvSigtoBuildGraph() //Слот принимающий сигнал и выводящий график на экран
 {
 
-    //Перед новой отрисовкой очистим графики
-    if(chart->series().isEmpty() == false){
-        series->clear();
-        chart->removeSeries(series);
-    }
-    //Заносим данные точек на график, где на х идет индекс точки в векторе, а в у идет сама точка
-    for(int i = 0; i<sendIntoGraph.size(); i++){
-        series->append(i,sendIntoGraph.at(i));
-    }
-
-    chart->addSeries(series);
-    chart->createDefaultAxes();
 
     chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
+
 
      window.setCentralWidget(chartView);
      window.setWindowTitle("График");

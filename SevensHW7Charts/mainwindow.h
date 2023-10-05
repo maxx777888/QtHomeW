@@ -43,12 +43,12 @@ public:
 private slots:
     void on_pb_path_clicked();
     void on_pb_start_clicked();
-    void RcvSigtoBuildGraph(QVector<double> sendIntoGraph);
+    void RcvSigtoBuildGraph();
 
     void on_pb_clearResult_clicked();
 
 signals:
-    void sig_buildGraph(QVector<double> sendIntoGraph);
+    void sig_buildGraph();
 
 private:
     Ui::MainWindow *ui;
