@@ -8,6 +8,7 @@
 #include <QtGlobal>
 #include <QtConcurrent>
 #include <algorithm>
+#include <QVector>
 
 ///Подключаем все что нужно для графиков
 #include <QLineSeries>

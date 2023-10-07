@@ -17,7 +17,9 @@ MainWindow::MainWindow(QWidget *parent)
     chart->legend()->setVisible(false);
 
     series = new QLineSeries();
+    chartView = new QChartView(chart);
 
+    //Содиняем сигнал потока вычисления данных со слотом где производится вывод графика на экран
     connect(this, &MainWindow::sig_buildGraph, this, &MainWindow::RcvSigtoBuildGraph);
 
 
@@ -31,6 +33,7 @@ MainWindow::~MainWindow()
     delete chart;
     delete chartView;
     delete series;
+
 }
 
 
@@ -234,6 +237,8 @@ void MainWindow::on_pb_start_clicked()
     }
 
 
+
+
     auto read = [&]{ return ReadFile(pathToFile, numberSelectChannel); };
     auto process = [&](QVector<uint32_t> res){ return ProcessFile(res);};
     auto findMax = [&](QVector<double> res){
@@ -248,25 +253,24 @@ void MainWindow::on_pb_start_clicked()
 
                                                 QVector<double> sendIntoGraph = res.mid(0, FD);
 
-                                                //Перед новой отрисовкой очистим графики
-                                                if(chart->series().isEmpty() == false){
-                                                    series->clear();
-                                                    chart->removeSeries(series);
-                                                }
-                                                //Заносим данные точек на график, где на х идет индекс точки в векторе, а в у идет сама точка
+                                                //Заносим данные точек в серии, где на х идет индекс точки в векторе, а в у идет сама точка
                                                 for(int i = 0; i<sendIntoGraph.size(); i++){
                                                     series->append(i,sendIntoGraph.at(i));
                                                 }
 
-                                                chart->addSeries(series);
-                                                chart->createDefaultAxes();
-
-
-
-
                                                 emit sig_buildGraph();
 
                                              };
+
+
+    //Перед новой отрисовкой очистим графики
+    if(chart->series().isEmpty() == false){
+        series->clear();
+        chart->removeSeries(series);
+
+    }
+
+
 
     auto result = QtConcurrent::run(read)
                                .then(process)
@@ -277,12 +281,14 @@ void MainWindow::on_pb_start_clicked()
 
 void MainWindow::RcvSigtoBuildGraph() //Слот принимающий сигнал и выводящий график на экран
 {
+    //Добавляем серии уже на график
+    chart->addSeries(series);
+    chart->createDefaultAxes();
 
 
-    chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
-
+    //Создаем окно вывода графика на экран
      window.setCentralWidget(chartView);
      window.setWindowTitle("График");
      window.resize(400,300);
