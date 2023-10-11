@@ -47,7 +47,7 @@ void DataBase::ConnectToDataBase(QVector<QString> data)
 
     if (status){
 
-
+        DataBase::AddDataBase(POSTGRE_DRIVER, DB_NAME);
 
     }
 
@@ -74,10 +74,11 @@ void DataBase::DisconnectFromDataBase(QString nameDb)
  */
 void DataBase::RequestToDB(QString request)
 {
+    request = "SELECT title, description FROM film";
 
     ///Тут должен быть код ДЗ
     quiryModel = new QSqlQueryModel(this);
-    quiryModel->setQuery("SELECT title, description FROM film");
+    quiryModel->setQuery(request);
     quiryModel->setHeaderData(0, Qt::Horizontal, tr("Название фильма"));
     quiryModel->setHeaderData(1, Qt::Horizontal, tr("Описание фильма"));
 
