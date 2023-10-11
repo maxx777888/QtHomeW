@@ -44,7 +44,6 @@ MainWindow::MainWindow(QWidget *parent)
      *  Сигнал для подключения к БД
      */
     connect(dataBase, &DataBase::sig_SendStatusConnection, this, &MainWindow::ReceiveStatusConnectionToDB);
-    connect(dataBase, &DataBase::sig_SendStatusRequest, this, &MainWindow::ReceiveStatusRequestToDB); //Взял из примера
 
 }
 
@@ -68,16 +67,21 @@ void MainWindow::on_act_addData_triggered()
 
 void MainWindow::on_act_connect_triggered()
 {
-
+    /*
+     * Обработчик кнопки у нас должен подключаться и отключаться от БД.
+     * Можно привязаться к надписи лейбла статуса. Если он равен
+     * "Отключено" мы осуществляем подключение, если "Подключено" то
+     * отключаемся
+    */
 
     if(ui->lb_statusConnect->text() == "Отключено"){
 
-        ui->lb_statusConnect->setText("Подключение");
-        ui->lb_statusConnect->setStyleSheet("color : black");
+       ui->lb_statusConnect->setText("Подключение");
+       ui->lb_statusConnect->setStyleSheet("color : black");
 
 
-        auto conn = [&]{dataBase->ConnectToDataBase(dataForConnect);};
-        QtConcurrent::run(conn);
+       auto conn = [&]{dataBase->ConnectToDataBase(dataForConnect);};
+       QtConcurrent::run(conn);
 
     }
     else{
@@ -97,51 +101,20 @@ void MainWindow::on_pb_request_clicked()
 {
 
     ///Тут должен быть код ДЗ
-
-    if (ui->cb_category->currentText() == "Все"){
-
-      request = "SELECT title, description FROM film ";
-
-    } else if (ui->cb_category->currentText() == "Комедия"){
-
-      request = "SELECT title, description FROM film f JOIN "
-                "film_category fc on f.film_id = fc.film_id JOIN "
-                "category c on c.category_id = fc.category_id WHERE c.name = 'Comedy'";
-
-    } else if (ui->cb_category->currentText() == "Ужасы"){
-
-      request = "SELECT title, description FROM film f JOIN "
-                "film_category fc on f.film_id = fc.film_id JOIN "
-                "category c on c.category_id = fc.category_id WHERE c.name = 'Horror' ";
-    }
-
     auto req = [&]{dataBase->RequestToDB(request);};
     QtConcurrent::run(req);
-
 }
 
-
-void MainWindow::ScreenDataFromDB(const QTableView *widget)//Метод формирует дизайн вывода таблицы на экране
+/*!
+ * \brief Слот отображает значение в QTableWidget
+ * \param widget
+ * \param typeRequest
+ */
+void MainWindow::ScreenDataFromDB(QSqlTableModel *tableView)
 {
+
     ///Тут должен быть код ДЗ
-
-
-//        ui->tb_result->setRowCount(widget->rowCount( ));
-//        ui->tb_result->setColumnCount(widget->columnCount( ));
-//        QStringList hdrs;
-//        for(int i = 0; i < widget->columnCount(); ++i){
-//            hdrs << widget->horizontalHeaderItem(i)->text();
-//        }
-//        ui->tb_result->setHorizontalHeaderLabels(hdrs);
-
-//        for(int i = 0; i<widget->rowCount(); ++i){
-//            for(int j = 0; j<widget->columnCount(); ++j){
-//                ui->tb_result->setItem(i,j, widget->item(i,j)->clone());
-//            }
-//        }
-
-//        ui->tb_result->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
+    ui->tb_result->setModel(tableView);
 
 
 
@@ -169,30 +142,5 @@ void MainWindow::ReceiveStatusConnectionToDB(bool status)
 
 }
 
-/*!
- * \brief Метод обрабатывает ответ БД на поступивший запрос
- * \param err
- */
-void MainWindow::ReceiveStatusRequestToDB(QSqlError err)
-{
 
-    if(err.type() != QSqlError::NoError){
-        msg->setText(err.text());
-        msg->exec();
-    }
-    else{
-
-        dataBase->ReadAnswerFromDB();
-
-    }
-
-}
-
-
-
-void MainWindow::on_pb_clear_clicked()
-{
-    ui->tb_result->close();
-    ui->cb_category->setCurrentText("Все");
-}
 

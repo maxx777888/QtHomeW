@@ -7,6 +7,7 @@
 #include <QSqlError>
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
+#include <QTableView>
 
 
 #define POSTGRE_DRIVER "QPSQL"
@@ -24,6 +25,14 @@ enum fieldsForConnect{
     port = 4
 };
 
+//Типы запросов
+enum requestType{
+
+    requestAllFilms = 1,
+    requestComedy   = 2,
+    requestHorrors  = 3
+
+};
 
 
 
@@ -38,25 +47,22 @@ public:
     void AddDataBase(QString driver, QString nameDB = "");
     void DisconnectFromDataBase(QString nameDb = "");
     void RequestToDB(QString request);
-    void ReadAnswerFromDB();
     QSqlError GetLastError(void);
     void ConnectToDataBase(QVector<QString> dataForConnect);
 
 
 signals:
 
-   void sig_SendDataFromDB(const QTableWidget *tableWg);
+   void sig_SendDataFromDB(QSqlTableModel *tableWg);
    void sig_SendStatusConnection(bool);
-   void sig_SendStatusRequest(QSqlError err);
 
 
 
 private:
 
     QSqlDatabase* dataBase;
-    QSqlQueryModel* modelQuery;
-    QSqlTableModel tableModel;
-    QTableView* tableView;
+    QSqlTableModel *model;
+    QSqlQueryModel *quiryModel;
 
 
 };
