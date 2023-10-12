@@ -38,7 +38,8 @@ MainWindow::MainWindow(QWidget *parent)
     /*
      * Соединяем сигнал, который передает ответ от БД с методом, который отображает ответ в ПИ
      */
-     connect(dataBase, &DataBase::sig_SendDataFromDB, this, &MainWindow::ScreenDataFromDB);
+     connect(dataBase, &DataBase::sig_SendDataFromDBTableModel, this, &MainWindow::ScreenDataFromDBTableModel);
+     connect(dataBase, &DataBase::sig_SendDataFromDBQuiryModel, this, &MainWindow::ScreenDataFromDBQueryModel);
 
     /*
      *  Сигнал для подключения к БД
@@ -50,6 +51,16 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+//Метод отображает запрос с помощью класса QSqlQueryModel когда выбрано "Комедия" или "Ужасы"
+void MainWindow::ScreenDataFromDBQueryModel(QSqlQueryModel *queryView)
+{
+    ui->tb_result->setModel(queryView);
+
+    ui->tb_result->resizeRowsToContents();
+    ui->tb_result->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    ui->tb_result->show();
 }
 
 /*!
@@ -101,20 +112,38 @@ void MainWindow::on_pb_request_clicked()
 {
 
     ///Тут должен быть код ДЗ
-    auto req = [&]{dataBase->RequestToDB(request);};
-    QtConcurrent::run(req);
+    if (ui->cb_category->currentText() == "Все"){
+
+        auto req = [&]{dataBase->RequestToDB(requestAllFilms);};
+        QtConcurrent::run(req);
+
+    } else if(ui->cb_category->currentText() == "Комедия")
+    {
+        auto req = [&]{dataBase->RequestToDB(requestComedy);};
+        QtConcurrent::run(req);
+
+    } else if(ui->cb_category->currentText() == "Ужасы")
+    {
+        auto req = [&]{dataBase->RequestToDB(requestHorrors);};
+        QtConcurrent::run(req);
+    }
+
+
+
 }
 
-/*!
- * \brief Слот отображает значение в QTableWidget
- * \param widget
- * \param typeRequest
- */
-void MainWindow::ScreenDataFromDB(QSqlTableModel *tableView)
+//Метод отображает запрос с помощью класса QSqlTableModel когда выбрано "Все"
+void MainWindow::ScreenDataFromDBTableModel(QSqlTableModel *tableView)
 {
 
     ///Тут должен быть код ДЗ
+
     ui->tb_result->setModel(tableView);
+
+    ui->tb_result->resizeRowsToContents();
+    ui->tb_result->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    ui->tb_result->show();
 
 
 
@@ -143,4 +172,14 @@ void MainWindow::ReceiveStatusConnectionToDB(bool status)
 }
 
 
+
+//Обработка кнопки очистить, очищаем виджет QTableView от всего.
+void MainWindow::on_pb_clear_clicked()
+{
+
+    ui->tb_result->setModel(nullptr);
+    ui->tb_result->show();
+    //ui->cb_category->setCurrentText("Все");
+
+}
 

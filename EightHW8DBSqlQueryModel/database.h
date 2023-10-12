@@ -46,14 +46,15 @@ public:
 
     void AddDataBase(QString driver, QString nameDB = "");
     void DisconnectFromDataBase(QString nameDb = "");
-    void RequestToDB(QString request);
+    void RequestToDB(int requestType);
     QSqlError GetLastError(void);
     void ConnectToDataBase(QVector<QString> dataForConnect);
 
 
 signals:
 
-   void sig_SendDataFromDB(QSqlTableModel *tableWg);
+   void sig_SendDataFromDBTableModel(QSqlTableModel *tableWg);
+   void sig_SendDataFromDBQuiryModel(QSqlQueryModel *tableWg);
    void sig_SendStatusConnection(bool);
 
 

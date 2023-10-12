@@ -47,8 +47,8 @@ void DataBase::ConnectToDataBase(QVector<QString> data)
 
     if (status){
 
-        DataBase::AddDataBase(POSTGRE_DRIVER, DB_NAME);
-
+        quiryModel = new QSqlQueryModel;
+        model = new QSqlTableModel(this, *dataBase);
     }
 
 
@@ -72,23 +72,55 @@ void DataBase::DisconnectFromDataBase(QString nameDb)
  * \param request - SQL запрос
  * \return
  */
-void DataBase::RequestToDB(QString request)
+void DataBase::RequestToDB(int requestType)
 {
-    request = "SELECT title, description FROM film";
-
     ///Тут должен быть код ДЗ
-    quiryModel = new QSqlQueryModel(this);
-    quiryModel->setQuery(request);
-    quiryModel->setHeaderData(0, Qt::Horizontal, tr("Название фильма"));
-    quiryModel->setHeaderData(1, Qt::Horizontal, tr("Описание фильма"));
+    QString request = "";
 
-    model = new QSqlTableModel;
-    model->setTable("film");
-    model->select();
-    //model->setHeaderData(0, Qt::Horizontal, tr("Название фильма"));
-    //model->setHeaderData(1, Qt::Horizontal, tr("Описание фильма"));
+    switch (requestType)
+    {
+    case requestAllFilms:
+    {
+        request = "SELECT title, description FROM film";
 
-    emit sig_SendDataFromDB(model);
+        model->setTable("film");
+        model->select();
+        model->setHeaderData(0, Qt::Horizontal, tr("Название фильма"));
+        model->setHeaderData(1, Qt::Horizontal, tr("Описание фильма"));
+        model->setQuery(request, *dataBase);
+        emit sig_SendDataFromDBTableModel(model);
+        break;
+    }
+    case requestComedy:
+    {
+        request = "SELECT title, description FROM film f "
+                  "JOIN film_category fc on f.film_id = fc.film_id "
+                  "JOIN category c on c.category_id = fc.category_id "
+                  "WHERE c.name = 'Comedy'";
+        quiryModel->setQuery(request, *dataBase);
+        quiryModel->setHeaderData(0, Qt::Horizontal, tr("Название фильма"));
+        quiryModel->setHeaderData(1, Qt::Horizontal, tr("Описание фильма"));
+        emit sig_SendDataFromDBQuiryModel(quiryModel);
+        break;
+    }
+    case requestHorrors:
+    {
+        request = "SELECT title, description FROM film f "
+                  "JOIN film_category fc on f.film_id = fc.film_id "
+                  "JOIN category c on c.category_id = fc.category_id "
+                  "WHERE c.name = 'Horror'";
+        quiryModel->setQuery(request, *dataBase);
+        quiryModel->setHeaderData(0, Qt::Horizontal, tr("Название фильма"));
+        quiryModel->setHeaderData(1, Qt::Horizontal, tr("Описание фильма"));
+        emit sig_SendDataFromDBQuiryModel(quiryModel);
+        break;
+    }
+
+    default:
+        break;
+    }
+
+
 }
 
 /*!
