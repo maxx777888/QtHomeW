@@ -15,21 +15,98 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" rowspan="2">
-     <widget class="QTextEdit" name="te_FlightTab"/>
+    <item row="1" column="0" rowspan="5">
+     <widget class="QTableView" name="tb_FlightInfo"/>
     </item>
-    <item row="0" column="1">
-     <widget class="QTextEdit" name="te_AirPortZone"/>
-    </item>
-    <item row="1" column="1">
-     <widget class="QTextEdit" name="te_buttons"/>
-    </item>
-    <item row="2" column="0" colspan="2">
+    <item row="6" column="0" colspan="3">
      <widget class="QLabel" name="lb_ConStatus">
       <property name="text">
        <string>Отключено</string>
       </property>
      </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QDateEdit" name="de_DateFlight">
+      <property name="maximumDateTime">
+       <datetime>
+        <hour>23</hour>
+        <minute>59</minute>
+        <second>59</second>
+        <year>2017</year>
+        <month>9</month>
+        <day>14</day>
+       </datetime>
+      </property>
+      <property name="minimumDateTime">
+       <datetime>
+        <hour>0</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>2016</year>
+        <month>8</month>
+        <day>15</day>
+       </datetime>
+      </property>
+      <property name="minimumDate">
+       <date>
+        <year>2016</year>
+        <month>8</month>
+        <day>15</day>
+       </date>
+      </property>
+      <property name="maximumTime">
+       <time>
+        <hour>23</hour>
+        <minute>59</minute>
+        <second>59</second>
+       </time>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QComboBox" name="cb_AirPortList"/>
+    </item>
+    <item row="4" column="2">
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Получить данные</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QGroupBox" name="gb_ArDe">
+      <property name="title">
+       <string>Выберите вылет или прилет</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QRadioButton" name="rb_Dep">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Вылет</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="rb_Arr">
+         <property name="text">
+          <string>Прилет</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="5" column="2">
+     <widget class="QTextEdit" name="pb_Request"/>
     </item>
    </layout>
   </widget>
