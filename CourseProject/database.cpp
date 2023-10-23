@@ -81,7 +81,7 @@ void database::RequestToDB(QString airportCode, QString dateFl,int req)
 
     if (req == requestArrival) {
         flightInfoQuery->setQuery(rqArrival, *dataBase);
-        int ansA = flightInfoQuery->rowCount();
+        //int ansA = flightInfoQuery->rowCount();
         if(flightInfoQuery->rowCount() != 0) {
 
             flightInfoQuery->setHeaderData(0, Qt::Horizontal, tr("№ Рейса"));
@@ -95,7 +95,7 @@ void database::RequestToDB(QString airportCode, QString dateFl,int req)
     if (req == requestDeparture) {
 
         flightInfoQuery->setQuery(rqDeparture, *dataBase);
-        int ansD = flightInfoQuery->rowCount();
+        //int ansD = flightInfoQuery->rowCount();
         if(flightInfoQuery->rowCount() != 0) {
 
             flightInfoQuery->setHeaderData(0, Qt::Horizontal, tr("№ Рейса"));

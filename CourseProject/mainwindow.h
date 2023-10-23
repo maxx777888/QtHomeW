@@ -38,6 +38,7 @@ private:
     QMessageBox* msg;//Объект окна ошибки
     int ms = 0, s = 0;//Переменные которые нужны для работы таймера
     QString airportCode = "";
+    bool isQTConcurrentRunning = false;
 
 private slots:
     void TimerSlot();//Слот для работы с таймером

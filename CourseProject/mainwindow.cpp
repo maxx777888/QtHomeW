@@ -109,7 +109,14 @@ void MainWindow::on_cb_AirPortList_currentIndexChanged(int index)
     airportCode = ui->cb_AirPortList->model()->index(index, 1).data().toString();
 }
 
-
+/*
+ * Уже почти ночью пришла такая мысль, чтобы проверку на работу потока
+ * С помощью булевой переменной isQTConcurrentRunning провераю если поток еще в работе
+ * и не запускаю новыю запрос пока не закончит работу старый
+ * Вроде бы сейчас приложение не вылетает,
+ * ное могли бы вы оценить эту задумку и сказать это правильное решение?
+ * Или я еще где-то ошибаюсь?
+ */
 void MainWindow::on_pushButton_clicked()
 {
     QString dateF = ui->de_DateFlight->date().toString("yyyy-MM-dd");
@@ -117,15 +124,27 @@ void MainWindow::on_pushButton_clicked()
 
     if (ui->rb_Arr->isChecked()){
 
-//        auto req = [&]{dataBase->RequestToDB(airportCode, dateF, requestArrival);};
+       auto req = [&]{dataBase->RequestToDB(airportCode, dateF, requestArrival);};
 //        QtConcurrent::run(req);
 
-        auto req = [&]{dataBase->RequestToDB(airportCode, dateF, requestArrival);};
-        try {
-            QtConcurrent::run(req);
-            qDebug() << "No Errors arrivel";
-        } catch (const std::exception& e) {
-            qDebug() << "Error: " << e.what();
+//        auto req = [&]{dataBase->RequestToDB(airportCode, dateF, requestArrival);};
+//        try {
+//            auto future =QtConcurrent::run(req);
+//            if (future.isRunning()) {
+//                qDebug() << "Arrival Task is still running";
+//            } else if (future.isFinished()) {
+//                qDebug() << "Arrival Task has finished";
+//            }
+
+//        } catch (const std::exception& e) {
+//            qDebug() << "Error: " << e.what();
+//        }
+
+        if (!isQTConcurrentRunning) {
+            isQTConcurrentRunning = true;
+            auto future = QtConcurrent::run(req);
+            future.waitForFinished();
+            isQTConcurrentRunning = false;
         }
 
     } else if (ui->rb_Dep->isChecked()){
@@ -134,11 +153,22 @@ void MainWindow::on_pushButton_clicked()
 //        QtConcurrent::run(req);
 
         auto req = [&]{dataBase->RequestToDB(airportCode, dateF, requestDeparture);};
-        try {
-            QtConcurrent::run(req);
-            qDebug() << "No Errors departure ";
-        } catch (const std::exception& e) {
-            qDebug() << "Error: " << e.what();
+//        try {
+//            auto future =QtConcurrent::run(req);
+//            if (future.isRunning()) {
+//                qDebug() << "Departure Task is still running";
+//            } else if (future.isFinished()) {
+//                qDebug() << "Departure Task has finished";
+//            }
+//        } catch (const std::exception& e) {
+//            qDebug() << "Error: " << e.what();
+//        }
+
+        if (!isQTConcurrentRunning) {
+            isQTConcurrentRunning = true;
+            auto future = QtConcurrent::run(req);
+            future.waitForFinished();
+            isQTConcurrentRunning = false;
         }
     }
 
