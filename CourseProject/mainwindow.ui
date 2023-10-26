@@ -15,64 +15,17 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0" rowspan="5">
-     <widget class="QTableView" name="tb_FlightInfo"/>
+    <item row="5" column="2">
+     <widget class="QPushButton" name="pb_getFlightInto">
+      <property name="text">
+       <string>Получить данные рейсов</string>
+      </property>
+     </widget>
     </item>
-    <item row="6" column="0" colspan="3">
+    <item row="8" column="0" colspan="3">
      <widget class="QLabel" name="lb_ConStatus">
       <property name="text">
        <string>Отключено</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="2">
-     <widget class="QDateEdit" name="de_DateFlight">
-      <property name="maximumDateTime">
-       <datetime>
-        <hour>23</hour>
-        <minute>59</minute>
-        <second>59</second>
-        <year>2017</year>
-        <month>9</month>
-        <day>14</day>
-       </datetime>
-      </property>
-      <property name="minimumDateTime">
-       <datetime>
-        <hour>0</hour>
-        <minute>0</minute>
-        <second>0</second>
-        <year>2016</year>
-        <month>8</month>
-        <day>15</day>
-       </datetime>
-      </property>
-      <property name="minimumDate">
-       <date>
-        <year>2016</year>
-        <month>8</month>
-        <day>15</day>
-       </date>
-      </property>
-      <property name="maximumTime">
-       <time>
-        <hour>23</hour>
-        <minute>59</minute>
-        <second>59</second>
-       </time>
-      </property>
-      <property name="calendarPopup">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="2">
-     <widget class="QComboBox" name="cb_AirPortList"/>
-    </item>
-    <item row="4" column="2">
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string>Получить данные</string>
       </property>
      </widget>
     </item>
@@ -105,8 +58,82 @@
       </layout>
      </widget>
     </item>
-    <item row="5" column="2">
-     <widget class="QTextEdit" name="pb_Request"/>
+    <item row="1" column="2">
+     <widget class="QComboBox" name="cb_AirPortList"/>
+    </item>
+    <item row="6" column="2">
+     <widget class="QPushButton" name="pb_getGraphWindowOpen">
+      <property name="text">
+       <string>Получить статистику</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QDateEdit" name="de_DateFlight">
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="maximumDateTime">
+       <datetime>
+        <hour>23</hour>
+        <minute>59</minute>
+        <second>59</second>
+        <year>2017</year>
+        <month>9</month>
+        <day>14</day>
+       </datetime>
+      </property>
+      <property name="minimumDateTime">
+       <datetime>
+        <hour>9</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>2016</year>
+        <month>8</month>
+        <day>15</day>
+       </datetime>
+      </property>
+      <property name="minimumDate">
+       <date>
+        <year>2016</year>
+        <month>8</month>
+        <day>15</day>
+       </date>
+      </property>
+      <property name="maximumTime">
+       <time>
+        <hour>23</hour>
+        <minute>59</minute>
+        <second>59</second>
+       </time>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="2">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="2">
+     <widget class="QLabel" name="lb_AirPortName">
+      <property name="text">
+       <string>Аэропорт</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" rowspan="8">
+     <widget class="QTableView" name="tb_FlightInfo"/>
     </item>
    </layout>
   </widget>
@@ -122,6 +149,15 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>cb_AirPortList</tabstop>
+  <tabstop>rb_Dep</tabstop>
+  <tabstop>pb_getFlightInto</tabstop>
+  <tabstop>de_DateFlight</tabstop>
+  <tabstop>rb_Arr</tabstop>
+  <tabstop>pb_getGraphWindowOpen</tabstop>
+  <tabstop>tb_FlightInfo</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
