@@ -15,20 +15,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="5" column="2">
-     <widget class="QPushButton" name="pb_getFlightInto">
-      <property name="text">
-       <string>Получить данные рейсов</string>
-      </property>
-     </widget>
-    </item>
-    <item row="8" column="0" colspan="3">
-     <widget class="QLabel" name="lb_ConStatus">
-      <property name="text">
-       <string>Отключено</string>
-      </property>
-     </widget>
-    </item>
     <item row="2" column="2">
      <widget class="QGroupBox" name="gb_ArDe">
       <property name="title">
@@ -61,14 +47,31 @@
     <item row="1" column="2">
      <widget class="QComboBox" name="cb_AirPortList"/>
     </item>
-    <item row="6" column="2">
+    <item row="7" column="2">
      <widget class="QPushButton" name="pb_getGraphWindowOpen">
       <property name="text">
        <string>Получить статистику</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="2">
+    <item row="6" column="2">
+     <widget class="QPushButton" name="pb_getFlightInto">
+      <property name="text">
+       <string>Получить данные рейсов</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QLabel" name="lb_AirPortName">
+      <property name="text">
+       <string>Аэропорт</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" rowspan="9">
+     <widget class="QTableView" name="tb_FlightInfo"/>
+    </item>
+    <item row="4" column="2">
      <widget class="QDateEdit" name="de_DateFlight">
       <property name="frame">
        <bool>true</bool>
@@ -85,7 +88,7 @@
       </property>
       <property name="minimumDateTime">
        <datetime>
-        <hour>9</hour>
+        <hour>6</hour>
         <minute>0</minute>
         <second>0</second>
         <year>2016</year>
@@ -112,7 +115,14 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="2">
+    <item row="9" column="0" colspan="3">
+     <widget class="QLabel" name="lb_ConStatus">
+      <property name="text">
+       <string>Отключено</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="2">
      <spacer name="verticalSpacer">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -125,15 +135,12 @@
       </property>
      </spacer>
     </item>
-    <item row="0" column="2">
-     <widget class="QLabel" name="lb_AirPortName">
+    <item row="3" column="2">
+     <widget class="QLabel" name="lb_DateText">
       <property name="text">
-       <string>Аэропорт</string>
+       <string>Выберите  дату</string>
       </property>
      </widget>
-    </item>
-    <item row="0" column="0" rowspan="8">
-     <widget class="QTableView" name="tb_FlightInfo"/>
     </item>
    </layout>
   </widget>

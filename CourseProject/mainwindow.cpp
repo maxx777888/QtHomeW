@@ -59,6 +59,7 @@ void MainWindow::TimerSlot()
 {
     ms++;//Увеличение милисекунд
     if(ms >= 100) {
+        ui->lb_ConStatus->setStyleSheet("QLabel { color : black; }");
         ui->lb_ConStatus->setText("Подключение к базе данных через-> " + QString::number(5 - s) + " сек.");
         ms = 0;
         s++;//Увеличение секунд
@@ -138,6 +139,7 @@ void MainWindow::ReceiveStatusConnectionToDB(bool status)
     else{//Если нет подключения выводим окно с ошибкой подключения
 
         msg->setIcon(QMessageBox::Critical);
+        ui->lb_ConStatus->setStyleSheet("QLabel { color : red; }");
         msg->setWindowTitle("Ошибка подключения к БД!");
         msg->setText(dataBase->GetLastError().text());
         ui->lb_ConStatus->setText("Отключено");
