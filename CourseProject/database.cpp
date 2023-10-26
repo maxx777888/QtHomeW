@@ -6,10 +6,10 @@ database::database(QObject *parent)
     //Создаем объект БД
     dataBase = new QSqlDatabase();
     //Создаем объек запроса к БД изначального списка аэропортов
-    airportNamesQuery = new QSqlQueryModel;
-    flightInfoQuery = new QSqlQueryModel;
-    monthStatQuery = new QSqlQueryModel;
-    yearStatQuery = new QSqlQueryModel;
+    airportNamesQuery = new QSqlQueryModel(this);
+    flightInfoQuery = new QSqlQueryModel(this);
+    monthStatQuery = new QSqlQueryModel(this);
+    yearStatQuery = new QSqlQueryModel(this);
 }
 
 database::~database()
