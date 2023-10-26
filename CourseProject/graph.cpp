@@ -24,6 +24,7 @@ Graph::~Graph()
 {
     delete ui;
     delete monthlyGraph;
+    delete yearGraph;
 }
 
 //Метод отрисовывает линейный месячный график
