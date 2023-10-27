@@ -20,8 +20,8 @@ public:
     ~Graph();
 
 public slots:
-    void rcvMonthlyStatForGraph(QVector<double> xAxe, QVector<double> yAxe);//Слот для отрисовки месячного графика
-    void rcvYearStatForBarChart(QVector<double> xAxe, QVector<double> yAxe);//Слот для отрисовки годового графика
+    void rcvMonthlyStatForGraph(QVector<double> &xAxe, QVector<double> &yAxe);//Слот для отрисовки месячного графика
+    void rcvYearStatForBarChart(QVector<double> &xAxe, QVector<double> &yAxe);//Слот для отрисовки годового графика
 
 
 private slots:

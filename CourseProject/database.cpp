@@ -63,7 +63,7 @@ QSqlError database::GetLastError()
 }
 
 //Метод осуществляет запросы к БД по поводу ежедневных рейсов
-void database::RequestToDBToGetAirportName(QString airportCode, QString dateFl,int req)
+void database::RequestToDBToGetAirportName(const QString &airportCode, const QString &dateFl, const int &req)
 {
     //Запрос прибывающих рейсов
     QString rqArrival = "SELECT flight_no, scheduled_arrival, ad.airport_name->>'ru' "
@@ -105,7 +105,7 @@ void database::RequestToDBToGetAirportName(QString airportCode, QString dateFl,i
 
 }
 //Метод обрабатывает информацию от БД полученную по месячной статистики
-void database::MonthlyRequestToDB(QString airportCode, int month)
+void database::MonthlyRequestToDB(const QString &airportCode, const int &month)
 {
     //Подготовка строки запроса к БД
     int year;
@@ -156,7 +156,7 @@ void database::MonthlyRequestToDB(QString airportCode, int month)
 
 }
 //Метод обрабатывает запрос к БД для получения данных по годичной статистике
-void database::YearRequestToDB(QString airportCode)
+void database::YearRequestToDB(const QString &airportCode)
 {
     QString req = "SELECT count(flight_no), date_trunc('month', scheduled_departure) "
                   "as \"Month\" from bookings.flights f "

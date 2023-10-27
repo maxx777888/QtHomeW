@@ -51,7 +51,7 @@ private:
     bool isGraphQtConcurrentRunning = false;//Проверка на завершение работы потока для мес. стат. и вывода графов
     bool isBarChartQtConcurrentRunning = false;//Проверка на завершение работы потока для год. стат. и вывода графов
     //Запускаем обработку запроса к БД по годовой статистике в отдельном потоке
-    void SendRequestForYearStatBarChart(QString airportCode);
+    void SendRequestForYearStatBarChart(const QString &airportCode);
 
 private slots:
     void TimerSlot();//Слот для работы с таймером

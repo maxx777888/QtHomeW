@@ -28,7 +28,7 @@ Graph::~Graph()
 }
 
 //Метод отрисовывает линейный месячный график
-void Graph::rcvMonthlyStatForGraph(QVector<double> xAxe, QVector<double> yAxe)
+void Graph::rcvMonthlyStatForGraph(QVector<double> &xAxe, QVector<double> &yAxe)
 {
     monthlyGraph->ClearGraph(ui->customPlotMonth);
     monthlyGraph->AddDataToGrahp(xAxe,yAxe);
@@ -36,7 +36,7 @@ void Graph::rcvMonthlyStatForGraph(QVector<double> xAxe, QVector<double> yAxe)
 }
 
 //Метод отрисовывает годовую столбиковую диаграмму
-void Graph::rcvYearStatForBarChart(QVector<double> xAxe, QVector<double> yAxe)
+void Graph::rcvYearStatForBarChart(QVector<double> &xAxe, QVector<double> &yAxe)
 {
     yearGraph->CrearBarChart(ui->customPlotYear);
     yearGraph->BuildAxeY(ui->customPlotYear, monthsList);

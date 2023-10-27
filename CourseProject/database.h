@@ -33,11 +33,11 @@ public:
     void DisconnectFromDataBase();//Метод отключения от БД
     QSqlError GetLastError(void);//Метод показывает ошибку подлючения к БД
     //Метод осуществляет запросы к БД по поводу ежедневных рейсов
-    void RequestToDBToGetAirportName(QString airportCode, QString dateFl,int req);
+    void RequestToDBToGetAirportName(const QString &airportCode, const QString &dateFl,const int &req);
     //Метод осуществляет запросы к БД для сбора месячной статистики
-    void MonthlyRequestToDB(QString airportCode, int month);
+    void MonthlyRequestToDB(const QString &airportCode, const int &month);
     //Метод осуществляет запросы к БД для сбора годовой статистики
-    void YearRequestToDB(QString airportCode);
+    void YearRequestToDB(const QString &airportCode);
 
 private:
     QSqlDatabase* dataBase;
@@ -58,8 +58,8 @@ signals:
     void sig_SendStatusConnection(bool);//Сигнал о подключение к БД
     void sig_SendDataFromDBQuiryModel(QSqlQueryModel *model); //Сигнал по запросу к БД
     void sig_SendRequstFlightInfo(QSqlQueryModel *model);//Сигнал по запросу стат рейсов
-    void sig_SendReqMonthStatForGraph(QVector<double> xAxe, QVector<double> yAxe);//Сигнал по запросу мес. статистики
-    void sig_SendReqYearStatForBarChart(QVector<double> xAxe, QVector<double> yAxe);//Сигнал по запросу годовой статистики
+    void sig_SendReqMonthStatForGraph(QVector<double> &xAxe, QVector<double> &yAxe);//Сигнал по запросу мес. статистики
+    void sig_SendReqYearStatForBarChart(QVector<double> &xAxe, QVector<double> &yAxe);//Сигнал по запросу годовой статистики
 };
 
 #endif // DATABASE_H

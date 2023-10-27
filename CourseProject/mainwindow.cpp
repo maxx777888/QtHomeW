@@ -115,7 +115,7 @@ void MainWindow::rcvDataFromMonthlyTextChange(int monNu)
     }
 }
 //Запускаем в отдельном потоке запрос к БД по годичной статистике
-void MainWindow::SendRequestForYearStatBarChart(QString airportCode)
+void MainWindow::SendRequestForYearStatBarChart(const QString &airportCode)
 {
     auto req = [&]{dataBase->YearRequestToDB(airportCode);};
 
